@@ -34,6 +34,12 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
+/**
+ * This binding adapter displays the [MoviesApiStatus] of the network request in an image view.  When
+ * the request is loading, it displays a loading_animation.  If the request has an error, it
+ * displays a broken image to reflect the connection error.  When the request is finished, it
+ * hides the image view.
+ */
 @BindingAdapter("moviesApiStatus")
 fun bindStatus(statusImageView: ImageView,
                status: MoviesApiStatus?) {
@@ -49,6 +55,7 @@ fun bindStatus(statusImageView: ImageView,
         MoviesApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
         }
+        else -> {}
     }
 
 }
