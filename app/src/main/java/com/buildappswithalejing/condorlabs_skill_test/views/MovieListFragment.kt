@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.buildappswithalejing.condorlabs_skill_test.R
 import com.buildappswithalejing.condorlabs_skill_test.databinding.FragmentMovieListBinding
+import com.buildappswithalejing.condorlabs_skill_test.databinding.ListViewItemBinding
 import com.buildappswithalejing.condorlabs_skill_test.viewmodels.MoviesViewModel
 
 /**
@@ -16,7 +17,7 @@ import com.buildappswithalejing.condorlabs_skill_test.viewmodels.MoviesViewModel
  */
 class MovieListFragment : Fragment() {
 
-    private var _binding: FragmentMovieListBinding? = null
+    private var _binding: ListViewItemBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,17 +25,22 @@ class MovieListFragment : Fragment() {
 
     private val viewModel: MoviesViewModel by viewModels()
 
+    /**
+     * Inflates the layout with Data Binding, sets its lifecycle owner to the MovieListFragment
+     * to enable Data Binding to observe LiveData, and sets up the RecyclerView with an adapter.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        //_binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        _binding = ListViewItemBinding.inflate(inflater)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
-        // Giving the binding access to the OverviewViewModel
+        // Giving the binding access to the MoviesViewModel
         binding.viewModel = viewModel
 
         return binding.root
@@ -43,10 +49,11 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        /**
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        */
     }
 
     override fun onDestroyView() {

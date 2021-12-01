@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/aleji/AndroidStudioProjects/CondorLabsSkillTest/app/src/main/res/drawable/ic_broken_image.xml" value="0.284375" />
         <entry key="..\:/Users/aleji/AndroidStudioProjects/CondorLabsSkillTest/app/src/main/res/layout/activity_main.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/aleji/AndroidStudioProjects/CondorLabsSkillTest/app/src/main/res/layout/activity_splash_screen.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/aleji/AndroidStudioProjects/CondorLabsSkillTest/app/src/main/res/layout/content_main.xml" value="0.37083333333333335" />
         <entry key="..\:/Users/aleji/AndroidStudioProjects/CondorLabsSkillTest/app/src/main/res/layout/fragment_movie_list.xml" value="0.37083333333333335" />
+        <entry key="..\:/Users/aleji/AndroidStudioProjects/CondorLabsSkillTest/app/src/main/res/layout/list_view_item.xml" value="0.37083333333333335" />
       </map>
     </option>
   </component>
