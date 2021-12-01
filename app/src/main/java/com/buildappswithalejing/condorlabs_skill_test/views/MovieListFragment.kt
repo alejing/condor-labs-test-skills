@@ -17,7 +17,7 @@ import com.buildappswithalejing.condorlabs_skill_test.viewmodels.MoviesViewModel
  */
 class MovieListFragment : Fragment() {
 
-    private var _binding: ListViewItemBinding? = null
+    private var _binding: FragmentMovieListBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -34,14 +34,17 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        //_binding = FragmentMovieListBinding.inflate(inflater, container, false)
-        _binding = ListViewItemBinding.inflate(inflater)
+        _binding = FragmentMovieListBinding.inflate(inflater, container, false)
+        //_binding = ListViewItemBinding.inflate(inflater)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
 
         // Giving the binding access to the MoviesViewModel
         binding.viewModel = viewModel
+
+        // Sets the adapter of the photosGrid RecyclerView
+        binding.photosGrid.adapter = MoviesListAdapter()
 
         return binding.root
 

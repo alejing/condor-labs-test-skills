@@ -10,16 +10,17 @@ import com.buildappswithalejing.condorlabs_skill_test.network.MoviesData
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
+enum class MoviesApiStatus { LOADING, ERROR, DONE }
+
 class MoviesViewModel : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
-    private val _status = MutableLiveData<String>()
+    private val _status = MutableLiveData<MoviesApiStatus>()
+    val status: LiveData<MoviesApiStatus> = _status
 
-    private val _photos = MutableLiveData<MoviesData>() // Tengo que quitar despues
-    val photos: LiveData<MoviesData> = _photos // Tengo que quitar despues
+    private val _photos = MutableLiveData<List<MoviesData>>() // Tengo que actualizar despues
+    val photos: LiveData<List<MoviesData>> = _photos // Tengo que actualizar despues
 
-    // The external immutable LiveData for the request status
-    val status: LiveData<String> = _status
     /**
      * Call getPopularMovies() on init so we can display status immediately.
      */
@@ -33,14 +34,15 @@ class MoviesViewModel : ViewModel() {
     private fun getPopularMovies() {
 
         viewModelScope.launch {
+            _status.value = MoviesApiStatus.LOADING
             try{
                 //val listResult = MoviesApi.retrofitService.getMovies()
                 //_status.value = "Success: ${listResult.size} Mars photos retrieved"
-                _photos.value = MoviesApi.retrofitService.getMovies()[0]
-                Log.d("MoviesViewModel",_photos.value!!.imgSrcUrl)
-                _status.value = "   First Mars image URL : ${_photos.value!!.imgSrcUrl}"
+                _photos.value = MoviesApi.retrofitService.getMovies()
+                _status.value = MoviesApiStatus.DONE
             }catch (e: Exception){
-                _status.value = "Failure: ${e.message}"
+                _status.value = MoviesApiStatus.ERROR
+                _photos.value = listOf()
             }
 
         }

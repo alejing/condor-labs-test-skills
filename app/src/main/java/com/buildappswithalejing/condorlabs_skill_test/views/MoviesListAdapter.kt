@@ -15,8 +15,8 @@ class MoviesListAdapter : ListAdapter<MoviesData,
                                 RecyclerView.ViewHolder(binding.root) {
 
         fun bind(MoviesData: MoviesData) {
-            //binding.photo = MoviesData
-            //binding.executePendingBindings()
+            binding.photo = MoviesData
+            binding.executePendingBindings()
         }
     }
 
