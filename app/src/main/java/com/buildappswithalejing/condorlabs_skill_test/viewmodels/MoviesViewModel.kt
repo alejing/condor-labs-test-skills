@@ -46,13 +46,15 @@ class MoviesViewModel : ViewModel() {
     fun getReleaseDate() = _movie.value?.releaseDate
     fun getBudget() = _movie.value?.budget
 
+    //TODO Think the logic to find the first video key
     fun getVideo(): String{
-        val urlYoutube = "https://www.youtube.com/watch?v="
+        val urlYoutube = "https://www.youtube.com/watch?v=VSB4wGIdDwo"
         if(_movie.value?.videos?.results?.size != 0){
             Log.d("ModelViewModel", _movie.value?.videos?.results?.size.toString())
             //return urlYoutube + _movie.value?.videos?.results!![0].key
         }
-        return "nv"
+        return urlYoutube
+        //return "nv"
     }
 
     /**

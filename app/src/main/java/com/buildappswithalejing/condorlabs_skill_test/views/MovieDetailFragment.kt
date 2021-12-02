@@ -1,5 +1,7 @@
 package com.buildappswithalejing.condorlabs_skill_test.views
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -59,6 +61,11 @@ class MovieDetailFragment : Fragment() {
             binding.movieVideoText.text = getString(R.string.video_available)
             binding.iconVideoLink.visibility = View.VISIBLE
             Log.d("MovieDetailFragment", urlVideo)
+            binding.iconVideoLink.setOnClickListener {
+                val youTubeVideo: Uri = Uri.parse(urlVideo)
+                val intent = Intent(Intent.ACTION_VIEW, youTubeVideo)
+                startActivity(intent)
+            }
         }else{
             binding.movieVideoText.text = getString(R.string.video_not_available)
             binding.iconVideoLink.visibility = View.GONE
