@@ -118,6 +118,51 @@
             app:layout_constraintTop_toTopOf="@+id/movie_budget" />
 
         <ImageView
+            android:id="@+id/icon_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_video"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/movie_video"
+            app:srcCompat="@drawable/ic_video" />
+
+        <TextView
+            android:id="@+id/movie_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Video"
+            android:layout_marginStart="10dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintStart_toEndOf="@+id/icon_video"
+            app:layout_constraintTop_toBottomOf="@+id/movie_budget" />
+
+        <TextView
+            android:id="@+id/movie_video_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_video"
+            app:layout_constraintStart_toEndOf="@+id/movie_video"
+            app:layout_constraintTop_toTopOf="@+id/movie_video"
+            tools:text="Video not available " />
+
+        <ImageView
+            android:id="@+id/icon_video_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_video_text"
+            app:layout_constraintStart_toEndOf="@+id/movie_video_text"
+            app:layout_constraintTop_toTopOf="@+id/movie_video_text"
+            app:srcCompat="@drawable/ic_watch" />
+
+
+
+        <ImageView
             android:id="@+id/status_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

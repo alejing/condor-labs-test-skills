@@ -1,5 +1,7 @@
 package com.buildappswithalejing.condorlabs_skill_test.network
 
+
+import android.provider.MediaStore
 import com.google.gson.annotations.SerializedName
 
 data class DataOneMovie (
@@ -27,7 +29,8 @@ data class DataOneMovie (
     @SerializedName(value = "title") var title: String,
     @SerializedName(value = "video") var video: Boolean,
     @SerializedName(value = "vote_average") var voteAverage: Number,
-    @SerializedName(value = "vote_count") var voteCount: Int
+    @SerializedName(value = "vote_count") var voteCount: Int,
+    @SerializedName(value = "videos") var videos: Videos
 )
 
 data class BCollection(
@@ -58,4 +61,21 @@ data class Languages(
     @SerializedName(value = "english_name") var englishName: String,
     @SerializedName(value = "iso_639_1") var iso639_1: String,
     @SerializedName(value = "name") var name: String
+)
+
+data class Videos(
+    @SerializedName(value = "results") var results: List<VideoItem>
+)
+
+data class VideoItem(
+    @SerializedName(value = "iso_639_1") var iso639_1: String,
+    @SerializedName(value = "iso_3166_1") var iso3166_1: String,
+    @SerializedName(value = "name") var name: String,
+    @SerializedName(value = "key") var key: String,
+    @SerializedName(value = "site") var site: String,
+    @SerializedName(value = "size") var size: Int,
+    @SerializedName(value = "type") var type: String,
+    @SerializedName(value = "official") var official: Boolean,
+    @SerializedName(value = "published_at") var publishedAt: String,
+    @SerializedName(value = "id") var id: String,
 )

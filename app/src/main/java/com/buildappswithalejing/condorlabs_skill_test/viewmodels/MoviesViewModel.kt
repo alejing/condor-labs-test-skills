@@ -46,10 +46,13 @@ class MoviesViewModel : ViewModel() {
     fun getReleaseDate() = _movie.value?.releaseDate
     fun getBudget() = _movie.value?.budget
 
-
-    private fun convertCurrency(budget: Int): String {
-        return NumberFormat.getCurrencyInstance().format(budget)
-        //binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
+    fun getVideo(): String{
+        val urlYoutube = "https://www.youtube.com/watch?v="
+        if(_movie.value?.videos?.results?.size != 0){
+            Log.d("ModelViewModel", _movie.value?.videos?.results?.size.toString())
+            //return urlYoutube + _movie.value?.videos?.results!![0].key
+        }
+        return "nv"
     }
 
     /**
@@ -77,8 +80,9 @@ class MoviesViewModel : ViewModel() {
                 val listResult = MoviesApi.retrofitService.getMovie(idMovie)
                 _movie.value = listResult
                 //_status.value = MoviesApiStatus.DONE
-                //Log.d("MoviesViewModel", listResult.title)
+                Log.d("MoviesViewModel", listResult.videos.results[0].site)
             } catch (e: Exception) {
+                Log.e("MoviesViewModel", e.toString())
                 //_status.value = MoviesApiStatus.ERROR
                 //_movie.value = null
             }

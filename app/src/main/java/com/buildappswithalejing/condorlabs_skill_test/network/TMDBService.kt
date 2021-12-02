@@ -33,7 +33,7 @@ interface TMDBService{
     @GET("/3/movie/popular?api_key=7ea095ca8a19451e8674dd26580bd42c")
     suspend fun getAllMovies(): Data
 
-    @GET("/3/movie/{idMovie}?api_key=7ea095ca8a19451e8674dd26580bd42c")
+    @GET("/3/movie/{idMovie}?api_key=7ea095ca8a19451e8674dd26580bd42c&append_to_response=videos")
     suspend fun getMovie(
         @Path(value = "idMovie") idNumber: String
     ): DataOneMovie

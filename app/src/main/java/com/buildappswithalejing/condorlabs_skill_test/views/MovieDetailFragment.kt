@@ -54,6 +54,16 @@ class MovieDetailFragment : Fragment() {
         binding.movieReleaseText.text = sharedViewModel.getReleaseDate().toString()
         binding.movieBudgetText.text = getString(R.string.budget_text, sharedViewModel.getBudget().toString())
 
+        val urlVideo = sharedViewModel.getVideo()
+        if(urlVideo != "nv"){
+            binding.movieVideoText.text = getString(R.string.video_available)
+            binding.iconVideoLink.visibility = View.VISIBLE
+            Log.d("MovieDetailFragment", urlVideo)
+        }else{
+            binding.movieVideoText.text = getString(R.string.video_not_available)
+            binding.iconVideoLink.visibility = View.GONE
+        }
+
         return binding.root
     }
 
