@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.buildappswithalejing.condorlabs_skill_test.R
@@ -23,8 +24,8 @@ class MovieListFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    private val viewModel: MoviesViewModel by viewModels()
+    // Shared viewModel for using data between fragments
+    private val sharedViewModel: MoviesViewModel by activityViewModels()
 
     /**
      * Inflates the layout with Data Binding, sets its lifecycle owner to the MovieListFragment
@@ -42,7 +43,7 @@ class MovieListFragment : Fragment() {
         binding.lifecycleOwner = this
 
         // Giving the binding access to the MoviesViewModel
-        binding.viewModel = viewModel
+        binding.viewModel = sharedViewModel
 
         // Sets the adapter of the moviesList RecyclerView
         binding.moviesList.adapter = MoviesListAdapter(listener)
@@ -61,8 +62,12 @@ class MovieListFragment : Fragment() {
     }
 
     private val listener = MoviesListAdapter.OnClickListener { id ->
+        //Log.d("MoviesListFragment", id)
+        // Sending id from MovieListFragment to MoviesDetailFragment with viewModel
+        //sharedViewModel.setIdMovie(id)
+
+        sharedViewModel.getMovie(id)
         // Add action to navigate
-        Log.d("MoviesListFragment", id)
         findNavController().navigate(R.id.action_movieListFragment_to_movieDetailFragment)
     }
 

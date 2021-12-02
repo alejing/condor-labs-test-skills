@@ -9,7 +9,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.buildappswithalejing.condorlabs_skill_test.network.Movie
-import com.buildappswithalejing.condorlabs_skill_test.network.MoviesData
 import com.buildappswithalejing.condorlabs_skill_test.viewmodels.MoviesApiStatus
 import com.buildappswithalejing.condorlabs_skill_test.views.MoviesListAdapter
 
@@ -39,7 +38,6 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 
 @BindingAdapter("movieNameAverage")
 fun bindTextNameAverage(textView: TextView, movieName: String?) {
-    //Log.d("BindingAdapter", movieName.toString())
     textView.text = movieName.toString()
 }
 

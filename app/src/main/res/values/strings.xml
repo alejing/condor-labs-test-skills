@@ -9,6 +9,7 @@
     <string name="previous">Previous</string>
 
     <string name="movie_img_url">https://image.tmdb.org/t/p/original/%s</string>
+    <string name="movie_video_url">https://www.youtube.com/watch?v=%s</string>
     <string name="movie_name">%s</string>
     <string name="movie_average">Average: %s</string>
 
@@ -19,7 +20,8 @@
     <string name="release_date">Release Date</string>
     <string name="release_date_text">Release Date</string>
     <string name="movie_overview">Movie Overview</string>
+    <string name="movie_overview_text">Overview</string>
     <string name="budget">Budget</string>
-    <string name="budget_text">$0.0</string>
+    <string name="budget_text">%s</string>
     <string name="by_author">By. José Alejandro Franco Calderon</string>
 </resources>

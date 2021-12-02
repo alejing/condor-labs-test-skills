@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.buildappswithalejing.condorlabs_skill_test.databinding.ListViewItemBinding
 import com.buildappswithalejing.condorlabs_skill_test.network.Movie
-import com.buildappswithalejing.condorlabs_skill_test.network.MoviesData
 
 class MoviesListAdapter(private val onClickListener: OnClickListener) :
             ListAdapter<Movie,
@@ -34,9 +33,10 @@ class MoviesListAdapter(private val onClickListener: OnClickListener) :
         val movieData = getItem(position)
         // Log.d("MoviesListAdapter", movieData.id.toString())
         holder.bind(movieData)
+        // getting the id from the recycler view list item and sending to the MovieListFragment
         holder.itemView.setOnClickListener {
             //Log.d("MoviesListAdapter", movieData.title)
-            onClickListener.onClick(movieData.title)
+            onClickListener.onClick(movieData.id.toString())
         }
     }
 

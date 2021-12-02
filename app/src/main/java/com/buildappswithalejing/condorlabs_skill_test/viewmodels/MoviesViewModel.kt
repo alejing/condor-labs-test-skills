@@ -1,15 +1,12 @@
 package com.buildappswithalejing.condorlabs_skill_test.viewmodels
 
+
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.buildappswithalejing.condorlabs_skill_test.network.MoviesApi
-import com.buildappswithalejing.condorlabs_skill_test.network.MoviesData
-import com.buildappswithalejing.condorlabs_skill_test.network.Movie
+import androidx.lifecycle.*
+import com.buildappswithalejing.condorlabs_skill_test.network.*
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.text.NumberFormat
 
 enum class MoviesApiStatus { LOADING, ERROR, DONE }
 
@@ -18,54 +15,72 @@ class MoviesViewModel : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<MoviesApiStatus>()
     val status: LiveData<MoviesApiStatus> = _status
-    /**
-    private val _photos = MutableLiveData<List<MoviesData>>() // Tengo que actualizar despues
-    val photos: LiveData<List<MoviesData>> = _photos // Tengo que actualizar despues
-    */
 
-    private val _photos = MutableLiveData<List<Movie>>() // Tengo que actualizar despues
-    val photos: LiveData<List<Movie>> = _photos // Tengo que actualizar despues
+    // The internal MutableLiveData that stores a List of Movies
+    private val _photos = MutableLiveData<List<Movie>>()
+    val photos: LiveData<List<Movie>> = _photos
+
+    // The internal MutableLiveData that stores a id of a particular Movie
+    private val _idMovie = MutableLiveData<String>()
+    val idMovie: LiveData<String> = _idMovie
+
+    // The internal MutableLiveData that stores a List of Movies
+    private val _movie = MutableLiveData<DataOneMovie>()
+    val movie: LiveData<DataOneMovie> = _movie
+
 
     /**
      * Call getPopularMovies() on init so we can display status immediately.
      */
     init {
-        //getPopularMovies()
-        getMovies()
         getPopularMovies()
     }
+
+    fun setIdMovie(idMovie: String) {
+        _idMovie.value = idMovie
+    }
+
+    fun getIdMovie() = _idMovie.value
+
+    fun getOverview() = _movie.value?.overview
+    fun getReleaseDate() = _movie.value?.releaseDate
+    fun getBudget() = _movie.value?.budget
+
+
+    private fun convertCurrency(budget: Int): String {
+        return NumberFormat.getCurrencyInstance().format(budget)
+        //binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
+    }
+
     /**
      * Gets popular movies information from the API Retrofit service and updates the
-     * [MarsPhoto] [List] [LiveData].
+     * getAllPopularMovies List LiveData
      */
     private fun getPopularMovies() {
 
         viewModelScope.launch {
             _status.value = MoviesApiStatus.LOADING
             try{
-                //val listResult = MoviesApi.retrofitService.getMovies()[0]
-                //_status.value = "Success: ${listResult.size} Mars photos retrieved"
-                /**_photos.value = MoviesApi.retrofitService.getMovies()*/
                 _photos.value = MoviesApi.retrofitService.getAllMovies().results
-                //Log.d("MoviesViewModel", listResult.imgSrcUrl)
                 _status.value = MoviesApiStatus.DONE
             }catch (e: Exception){
                 _status.value = MoviesApiStatus.ERROR
                 _photos.value = listOf()
             }
-
         }
     }
 
-    private fun getMovies() {
+    fun getMovie(idMovie: String) {
+        //_status.value = MoviesApiStatus.LOADING
         viewModelScope.launch {
             try {
-                val listResult = MoviesApi.retrofitService.getAllMovies()
-                Log.d("MoviesViewModel", listResult.results.size.toString())
-                //_status.value = "Success: ${listResult.size} Mars photos retrieved"
+                val listResult = MoviesApi.retrofitService.getMovie(idMovie)
+                _movie.value = listResult
+                //_status.value = MoviesApiStatus.DONE
+                //Log.d("MoviesViewModel", listResult.title)
             } catch (e: Exception) {
-                Log.e("MoviesViewModel", "Failure: ${e.message}")
-                //_status.value = "Failure: ${e.message}"
+                //_status.value = MoviesApiStatus.ERROR
+                //_movie.value = null
             }
         }
     }

@@ -7,6 +7,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 private const val BASE_URL =
     "https://android-kotlin-fun-mars-server.appspot.com"
@@ -29,11 +30,13 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface TMDBService{
-    @GET("photos")
-    suspend fun getMovies(): List<MoviesData>
-
     @GET("/3/movie/popular?api_key=7ea095ca8a19451e8674dd26580bd42c")
     suspend fun getAllMovies(): Data
+
+    @GET("/3/movie/{idMovie}?api_key=7ea095ca8a19451e8674dd26580bd42c")
+    suspend fun getMovie(
+        @Path(value = "idMovie") idNumber: String
+    ): DataOneMovie
 }
 
 /**
