@@ -65,7 +65,24 @@ class MovieListFragment : Fragment() {
         //Log.d("MoviesListFragment", id)
         // Sending id from MovieListFragment to MoviesDetailFragment with viewModel
         //sharedViewModel.setIdMovie(id)
+        //Log.d("MovieListFragment",sharedViewModel.status.value.toString())
 
+        /**
+        var image = binding.statusImage
+        // get only a movie from the service with the new data
+        sharedViewModel.getMovie(id)
+        var status = sharedViewModel.status.value.toString()
+        Log.d("MovieListFragment", status)
+        while(status != "DONE"){
+            Log.d("MovieListFragment", "$status 1")
+            image.visibility = View.VISIBLE
+            image.setImageResource(R.drawable.loading_animation)
+            status = sharedViewModel.status.value.toString()
+            Log.d("MovieListFragment", "$status 2")
+        }
+        image.visibility = View.GONE
+        */
+        // get only a movie from the service with the new data
         sharedViewModel.getMovie(id)
         // Add action to navigate
         findNavController().navigate(R.id.action_movieListFragment_to_movieDetailFragment)

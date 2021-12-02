@@ -155,6 +155,7 @@
             android:layout_height="wrap_content"
             android:importantForAccessibility="no"
             android:layout_marginStart="10dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/movie_video_text"
             app:layout_constraintStart_toEndOf="@+id/movie_video_text"
             app:layout_constraintTop_toTopOf="@+id/movie_video_text"

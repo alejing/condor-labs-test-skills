@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.buildappswithalejing.condorlabs_skill_test.network.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.lang.Exception
-import java.text.NumberFormat
 
 enum class MoviesApiStatus { LOADING, ERROR, DONE }
 
@@ -24,7 +24,7 @@ class MoviesViewModel : ViewModel() {
     private val _idMovie = MutableLiveData<String>()
     val idMovie: LiveData<String> = _idMovie
 
-    // The internal MutableLiveData that stores a List of Movies
+    // The internal MutableLiveData that stores only a movie
     private val _movie = MutableLiveData<DataOneMovie>()
     val movie: LiveData<DataOneMovie> = _movie
 
@@ -76,20 +76,20 @@ class MoviesViewModel : ViewModel() {
     }
 
     fun getMovie(idMovie: String) {
-        //_status.value = MoviesApiStatus.LOADING
+        _status.value = MoviesApiStatus.LOADING
         viewModelScope.launch {
             try {
                 val listResult = MoviesApi.retrofitService.getMovie(idMovie)
                 _movie.value = listResult
-                //_status.value = MoviesApiStatus.DONE
-                Log.d("MoviesViewModel", listResult.videos.results[0].site)
+                _status.value = MoviesApiStatus.DONE
+                //Log.d("MoviesViewModel", listResult.videos.results[0].site)
+                Log.d("MoviesViewModel", _status.value.toString())
             } catch (e: Exception) {
                 Log.e("MoviesViewModel", e.toString())
-                //_status.value = MoviesApiStatus.ERROR
-                //_movie.value = null
+                _status.value = MoviesApiStatus.ERROR
+                _movie.value = null
             }
         }
+
     }
-
-
 }

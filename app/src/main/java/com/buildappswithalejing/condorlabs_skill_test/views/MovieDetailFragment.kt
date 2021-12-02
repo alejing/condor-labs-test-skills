@@ -28,6 +28,8 @@ class MovieDetailFragment : Fragment() {
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
+    private var urlYoutube = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Capture the idMovie from the item List MovieListFragment
@@ -52,10 +54,26 @@ class MovieDetailFragment : Fragment() {
         // Giving the binding access to the MoviesViewModel
         binding.viewModel = sharedViewModel
 
-        binding.movieOverviewText.text = sharedViewModel.getOverview().toString()
-        binding.movieReleaseText.text = sharedViewModel.getReleaseDate().toString()
-        binding.movieBudgetText.text = getString(R.string.budget_text, sharedViewModel.getBudget().toString())
+        // Observe the LiveData and when it changes, update the
+        // state of the UI
+        sharedViewModel.movie.observe(viewLifecycleOwner){ movie ->
+            binding.movieOverviewText.text = movie.overview
+            binding.movieReleaseText.text = movie.releaseDate
+            binding.movieBudgetText.text = movie.budget.toString()
+            movie.videos.results[0].key.let {key ->
+                binding.iconVideoLink.visibility = View.VISIBLE
+                binding.movieVideoText.text = getString(R.string.video_available)
+                urlYoutube = getString(R.string.movie_video_url, key)
+            }
+            if (urlYoutube == "") {
+                binding.iconVideoLink.visibility = View.INVISIBLE
+                binding.movieVideoText.text = getString(R.string.video_not_available)
+            }
+        }
 
+        //Log.d("MovieDetailFragment", "onCreate " + sharedViewModel.status.value.toString())
+
+        /**
         val urlVideo = sharedViewModel.getVideo()
         if(urlVideo != "nv"){
             binding.movieVideoText.text = getString(R.string.video_available)
@@ -70,15 +88,23 @@ class MovieDetailFragment : Fragment() {
             binding.movieVideoText.text = getString(R.string.video_not_available)
             binding.iconVideoLink.visibility = View.GONE
         }
-
+        */
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.iconVideoLink.setOnClickListener {
+            val youTubeVideoUri: Uri = Uri.parse(urlYoutube)
+            val intent = Intent(Intent.ACTION_VIEW, youTubeVideoUri)
+            startActivity(intent)
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("MovieDetailFragment", "onDestroyView " + sharedViewModel.status.value.toString())
         _binding = null
     }
 

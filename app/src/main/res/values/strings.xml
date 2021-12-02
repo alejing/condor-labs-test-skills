@@ -24,6 +24,6 @@
     <string name="budget">Budget</string>
     <string name="budget_text">%s</string>
     <string name="by_author">By. José Alejandro Franco Calderon</string>
-    <string name="video_available">video available</string>
-    <string name="video_not_available">video not available</string>
+    <string name="video_available">Available</string>
+    <string name="video_not_available"> Not available</string>
 </resources>
