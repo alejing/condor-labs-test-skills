@@ -1,6 +1,7 @@
 package com.buildappswithalejing.condorlabs_skill_test.views
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,8 +44,8 @@ class MovieListFragment : Fragment() {
         // Giving the binding access to the MoviesViewModel
         binding.viewModel = viewModel
 
-        // Sets the adapter of the photosGrid RecyclerView
-        binding.photosGrid.adapter = MoviesListAdapter()
+        // Sets the adapter of the moviesList RecyclerView
+        binding.moviesList.adapter = MoviesListAdapter(listener)
 
         return binding.root
 
@@ -57,6 +58,12 @@ class MovieListFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
         */
+    }
+
+    private val listener = MoviesListAdapter.OnClickListener { id ->
+        // Add action to navigate
+        Log.d("MoviesListFragment", id)
+        findNavController().navigate(R.id.action_movieListFragment_to_movieDetailFragment)
     }
 
     override fun onDestroyView() {

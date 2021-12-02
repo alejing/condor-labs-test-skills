@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.buildappswithalejing.condorlabs_skill_test.network.MoviesApi
 import com.buildappswithalejing.condorlabs_skill_test.network.MoviesData
+import com.buildappswithalejing.condorlabs_skill_test.network.Movie
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -17,14 +18,20 @@ class MoviesViewModel : ViewModel() {
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<MoviesApiStatus>()
     val status: LiveData<MoviesApiStatus> = _status
-
+    /**
     private val _photos = MutableLiveData<List<MoviesData>>() // Tengo que actualizar despues
     val photos: LiveData<List<MoviesData>> = _photos // Tengo que actualizar despues
+    */
+
+    private val _photos = MutableLiveData<List<Movie>>() // Tengo que actualizar despues
+    val photos: LiveData<List<Movie>> = _photos // Tengo que actualizar despues
 
     /**
      * Call getPopularMovies() on init so we can display status immediately.
      */
     init {
+        //getPopularMovies()
+        getMovies()
         getPopularMovies()
     }
     /**
@@ -36,9 +43,11 @@ class MoviesViewModel : ViewModel() {
         viewModelScope.launch {
             _status.value = MoviesApiStatus.LOADING
             try{
-                //val listResult = MoviesApi.retrofitService.getMovies()
+                //val listResult = MoviesApi.retrofitService.getMovies()[0]
                 //_status.value = "Success: ${listResult.size} Mars photos retrieved"
-                _photos.value = MoviesApi.retrofitService.getMovies()
+                /**_photos.value = MoviesApi.retrofitService.getMovies()*/
+                _photos.value = MoviesApi.retrofitService.getAllMovies().results
+                //Log.d("MoviesViewModel", listResult.imgSrcUrl)
                 _status.value = MoviesApiStatus.DONE
             }catch (e: Exception){
                 _status.value = MoviesApiStatus.ERROR
@@ -47,5 +56,19 @@ class MoviesViewModel : ViewModel() {
 
         }
     }
+
+    private fun getMovies() {
+        viewModelScope.launch {
+            try {
+                val listResult = MoviesApi.retrofitService.getAllMovies()
+                Log.d("MoviesViewModel", listResult.results.size.toString())
+                //_status.value = "Success: ${listResult.size} Mars photos retrieved"
+            } catch (e: Exception) {
+                Log.e("MoviesViewModel", "Failure: ${e.message}")
+                //_status.value = "Failure: ${e.message}"
+            }
+        }
+    }
+
 
 }

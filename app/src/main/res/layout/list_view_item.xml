@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="photo"
-            type="com.buildappswithalejing.condorlabs_skill_test.network.MoviesData" />
+            name="movie"
+            type="com.buildappswithalejing.condorlabs_skill_test.network.Movie" />
     </data>
-    <ImageView
-        android:id="@+id/mars_image"
-        android:layout_width="wrap_content"
-        android:layout_height="170dp"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:padding="6dp"
-        app:imageUrl="@{photo.imgSrcUrl}"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/movie_image"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:importantForAccessibility="no"
+            android:padding="2dp"
+            android:scaleType="fitXY"
+            app:imageUrl="@{@string/movie_img_url(movie.posterPath)}"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toTopOf="@id/dog_age"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/movie_image"
+            app:movieNameAverage="@{@string/movie_name(movie.title)}"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/dog_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintStart_toStartOf="@id/movie_name"
+            app:layout_constraintTop_toBottomOf="@id/movie_name"
+            app:movieNameAverage="@{@string/movie_average(movie.voteAverage)}"
+            tools:text="Average: 0.0" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/secondaryDarkColor"
+            android:background="?attr/dividerHorizontal" />
+
+    </LinearLayout>
+
+
 </layout>

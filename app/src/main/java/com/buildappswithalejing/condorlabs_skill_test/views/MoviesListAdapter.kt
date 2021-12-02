@@ -1,21 +1,26 @@
 package com.buildappswithalejing.condorlabs_skill_test.views
 
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.buildappswithalejing.condorlabs_skill_test.databinding.ListViewItemBinding
+import com.buildappswithalejing.condorlabs_skill_test.network.Movie
 import com.buildappswithalejing.condorlabs_skill_test.network.MoviesData
 
-class MoviesListAdapter : ListAdapter<MoviesData,
-        MoviesListAdapter.MoviesDataViewHolder>(DiffCallback) {
+class MoviesListAdapter(private val onClickListener: OnClickListener) :
+            ListAdapter<Movie,
+            MoviesListAdapter.MoviesDataViewHolder>(DiffCallback) {
 
     class MoviesDataViewHolder(private var binding: ListViewItemBinding):
                                 RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(MoviesData: MoviesData) {
-            binding.photo = MoviesData
+        fun bind(Movie: Movie) {
+            binding.movie = Movie
             binding.executePendingBindings()
         }
     }
@@ -26,17 +31,26 @@ class MoviesListAdapter : ListAdapter<MoviesData,
     }
 
     override fun onBindViewHolder(holder: MoviesDataViewHolder, position: Int) {
-        val moviesData = getItem(position)
-        holder.bind(moviesData)
+        val movieData = getItem(position)
+        // Log.d("MoviesListAdapter", movieData.id.toString())
+        holder.bind(movieData)
+        holder.itemView.setOnClickListener {
+            //Log.d("MoviesListAdapter", movieData.title)
+            onClickListener.onClick(movieData.title)
+        }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<MoviesData>() {
-        override fun areItemsTheSame(oldItem: MoviesData, newItem: MoviesData): Boolean {
+    class OnClickListener(val clickListener: (id: String) -> Unit) {
+        fun onClick(id: String) = clickListener(id)
+    }
+
+    companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: MoviesData, newItem: MoviesData): Boolean {
-            return oldItem.imgSrcUrl == newItem.imgSrcUrl
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.posterPath == newItem.posterPath
         }
     }
 }

@@ -4,23 +4,36 @@ import com.squareup.moshi.Moshi
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Response
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 private const val BASE_URL =
     "https://android-kotlin-fun-mars-server.appspot.com"
 
+private const val BASE_URL_API =
+    "https://api.themoviedb.org"
+
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
-
+/**
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
+    .build()
+*/
+private val retrofit = Retrofit.Builder()
+    .addConverterFactory(GsonConverterFactory.create())
+    .baseUrl(BASE_URL_API)
     .build()
 
 interface TMDBService{
     @GET("photos")
     suspend fun getMovies(): List<MoviesData>
+
+    @GET("/3/movie/popular?api_key=7ea095ca8a19451e8674dd26580bd42c")
+    suspend fun getAllMovies(): Data
 }
 
 /**

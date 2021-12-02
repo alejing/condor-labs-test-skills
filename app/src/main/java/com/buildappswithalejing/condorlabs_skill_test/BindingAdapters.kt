@@ -1,11 +1,14 @@
 package com.buildappswithalejing.condorlabs_skill_test
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.buildappswithalejing.condorlabs_skill_test.network.Movie
 import com.buildappswithalejing.condorlabs_skill_test.network.MoviesData
 import com.buildappswithalejing.condorlabs_skill_test.viewmodels.MoviesApiStatus
 import com.buildappswithalejing.condorlabs_skill_test.views.MoviesListAdapter
@@ -15,7 +18,7 @@ import com.buildappswithalejing.condorlabs_skill_test.views.MoviesListAdapter
  * Updates the data shown in the [RecyclerView].
  */
 @BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<MoviesData>?) {
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<Movie>?) {
     val adapter = recyclerView.adapter as MoviesListAdapter
     adapter.submitList(data)
 }
@@ -33,6 +36,13 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         }
     }
 }
+
+@BindingAdapter("movieNameAverage")
+fun bindTextNameAverage(textView: TextView, movieName: String?) {
+    //Log.d("BindingAdapter", movieName.toString())
+    textView.text = movieName.toString()
+}
+
 
 /**
  * This binding adapter displays the [MoviesApiStatus] of the network request in an image view.  When
