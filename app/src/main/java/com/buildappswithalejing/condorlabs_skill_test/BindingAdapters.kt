@@ -41,9 +41,6 @@ fun bindTextNameAverage(textView: TextView, movieName: String?) {
     textView.text = movieName.toString()
 }
 
-
-
-
 /**
  * This binding adapter displays the [MoviesApiStatus] of the network request in an image view.  When
  * the request is loading, it displays a loading_animation.  If the request has an error, it

@@ -23,22 +23,15 @@ class MovieDetailFragment : Fragment() {
 
     // Shared viewModel for using data between fragments
     private val sharedViewModel: MoviesViewModel by activityViewModels()
-
-
+    // Binding the Fragment with the layout
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
-
+    // Helper variable to add a full youtube video
     private var urlYoutube = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Capture the idMovie from the item List MovieListFragment
-        /**
-        sharedViewModel.getIdMovie()?.let { id ->
-            Log.d("MovieDetailFragment", id)
-            sharedViewModel.getMovie(id)
-        }
-        */
+
     }
 
     override fun onCreateView(
@@ -46,6 +39,7 @@ class MovieDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Link the layout attributes with the binding funcionality
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
@@ -73,25 +67,8 @@ class MovieDetailFragment : Fragment() {
 
         //Log.d("MovieDetailFragment", "onCreate " + sharedViewModel.status.value.toString())
 
-        /**
-        val urlVideo = sharedViewModel.getVideo()
-        if(urlVideo != "nv"){
-            binding.movieVideoText.text = getString(R.string.video_available)
-            binding.iconVideoLink.visibility = View.VISIBLE
-            Log.d("MovieDetailFragment", urlVideo)
-            binding.iconVideoLink.setOnClickListener {
-                val youTubeVideo: Uri = Uri.parse(urlVideo)
-                val intent = Intent(Intent.ACTION_VIEW, youTubeVideo)
-                startActivity(intent)
-            }
-        }else{
-            binding.movieVideoText.text = getString(R.string.video_not_available)
-            binding.iconVideoLink.visibility = View.GONE
-        }
-        */
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -104,7 +81,6 @@ class MovieDetailFragment : Fragment() {
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("MovieDetailFragment", "onDestroyView " + sharedViewModel.status.value.toString())
         _binding = null
     }
 

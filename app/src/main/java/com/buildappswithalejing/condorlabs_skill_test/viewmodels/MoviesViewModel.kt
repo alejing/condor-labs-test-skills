@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.buildappswithalejing.condorlabs_skill_test.network.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.lang.Exception
 
 enum class MoviesApiStatus { LOADING, ERROR, DONE }
@@ -40,11 +39,6 @@ class MoviesViewModel : ViewModel() {
         _idMovie.value = idMovie
     }
 
-    fun getIdMovie() = _idMovie.value
-
-    fun getOverview() = _movie.value?.overview
-    fun getReleaseDate() = _movie.value?.releaseDate
-    fun getBudget() = _movie.value?.budget
 
     //TODO Think the logic to find the first video key
     fun getVideo(): String{
