@@ -100,6 +100,9 @@ class MoviesViewModel : ViewModel() {
             _status.value = MoviesApiStatus.LOADING
             try{
                 _photos.value = MoviesApi.retrofitService.getAllMovies().results
+                _photos.value = photos.value?.sortedByDescending {
+                    it.voteAverage.toInt()
+                }
                 _status.value = MoviesApiStatus.DONE
             }catch (e: Exception){
                 _status.value = MoviesApiStatus.ERROR

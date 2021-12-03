@@ -69,7 +69,7 @@ class MovieDetailFragment : Fragment() {
                 //Log.d("MovieDetailFragment", "onCreateView " + budget)
                 binding.movieBudgetText.text = budget.toString()
             }
-            // put the video "link" if exist
+            // put the video "link" if it exist
             movie.videos.results[0].key.let {key ->
                 binding.iconVideoLink.visibility = View.VISIBLE
                 binding.movieVideoText.text = getString(R.string.video_available)
@@ -86,6 +86,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         // handle the video icon action
         binding.iconVideoLink.setOnClickListener {
             val youTubeVideoUri: Uri = Uri.parse(urlYoutube)
@@ -93,7 +94,7 @@ class MovieDetailFragment : Fragment() {
             startActivity(intent)
         }
 
-        // handle the fav button action
+        // handle the fav icon action
         binding.iconFav.setOnClickListener {
             sharedViewModel.addToFavorites()
             Toast.makeText(context, "Movie added to favorites", Toast.LENGTH_SHORT).show()
