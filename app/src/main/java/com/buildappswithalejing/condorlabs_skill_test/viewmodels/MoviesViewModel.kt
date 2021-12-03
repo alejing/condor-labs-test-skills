@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.buildappswithalejing.condorlabs_skill_test.network.*
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.text.NumberFormat
 
 enum class MoviesApiStatus { LOADING, ERROR, DONE }
 
@@ -20,13 +21,30 @@ class MoviesViewModel : ViewModel() {
     val photos: LiveData<List<Movie>> = _photos
 
     // The internal MutableLiveData that stores a id of a particular Movie
+    /**
     private val _idMovie = MutableLiveData<String>()
     val idMovie: LiveData<String> = _idMovie
+    */
 
     // The internal MutableLiveData that stores only a movie
     private val _movie = MutableLiveData<DataOneMovie>()
     val movie: LiveData<DataOneMovie> = _movie
 
+    // The internal MutableLiveData that stores the budget value to currency conversion
+    private val _budget = MutableLiveData<Double>()
+    val budget: LiveData<String> = Transformations.map(_budget) {
+        NumberFormat.getCurrencyInstance().format(it)
+    }
+
+    // The internal MutableLiveData that stores a list of movies showed in the details view
+    private val _savedMovies = MutableLiveData<List<CustomMovie>>()
+    val savedMovies: MutableLiveData<List<CustomMovie>> = _savedMovies
+
+    // The internal MutableLiveData that stores a id of a particular Movie
+    private val _idMovie = MutableLiveData<Int>()
+    val idMovie: LiveData<Int> = _idMovie
+
+    private var listMovies = mutableListOf<CustomMovie>()
 
     /**
      * Call getPopularMovies() on init so we can display status immediately.
@@ -35,20 +53,41 @@ class MoviesViewModel : ViewModel() {
         getPopularMovies()
     }
 
+    /**
     fun setIdMovie(idMovie: String) {
         _idMovie.value = idMovie
     }
+    */
+    fun addToFavorites(){
 
-
-    //TODO Think the logic to find the first video key
-    fun getVideo(): String{
-        val urlYoutube = "https://www.youtube.com/watch?v=VSB4wGIdDwo"
-        if(_movie.value?.videos?.results?.size != 0){
-            Log.d("ModelViewModel", _movie.value?.videos?.results?.size.toString())
-            //return urlYoutube + _movie.value?.videos?.results!![0].key
+        // find the movie to put as a favorite
+        val position = savedMovies.value?.indexOfFirst {
+            it.id == idMovie.value
         }
-        return urlYoutube
-        //return "nv"
+        // get the movie object with the position
+        val tempMovie = listMovies[position!!]
+
+        // change the value to true
+        tempMovie.favorite = true
+
+        // remove the movie of the list
+        listMovies.removeAt(position)
+
+        // add the new movie with the changes
+        listMovies.add(tempMovie)
+        // add the data again to the LiveData
+
+        _savedMovies.value = listMovies
+
+    }
+
+    private fun movieNotExist(id: Int): Boolean{
+        val position = savedMovies.value?.indexOfFirst {
+            it.id == idMovie.value
+        }
+        if (position == -1) return true
+
+        return false
     }
 
     /**
@@ -73,13 +112,35 @@ class MoviesViewModel : ViewModel() {
         _status.value = MoviesApiStatus.LOADING
         viewModelScope.launch {
             try {
+                // get Data from the REST Service
                 val listResult = MoviesApi.retrofitService.getMovie(idMovie)
+                // put all the movie data
                 _movie.value = listResult
+                // put only the budget value and convert toDouble
+                _budget.value = listResult.budget.toDouble()
+                // put only the id movie to track them
+                _idMovie.value = listResult.id
+                // save a custom movie in a local list of movies
+                val customMovie = CustomMovie(
+                    id = listResult.id,
+                    title = listResult.title,
+                    overview = listResult.overview,
+                    releaseDate = listResult.releaseDate,
+                    budget = listResult.budget,
+                    videoPath =  listResult.videos.results[0].key,
+                    imagePath = listResult.posterPath,
+                    favorite = false
+                )
+                // verify if the list is not empty or does not contain the movie yet
+                if (listMovies.isEmpty() || movieNotExist(listResult.id))
+                    listMovies.add(customMovie)
+                // add the lis of movies to live data
+                _savedMovies.value = listMovies
+
+                Log.d("MoviesViewModel", _savedMovies.value.toString())
                 _status.value = MoviesApiStatus.DONE
-                //Log.d("MoviesViewModel", listResult.videos.results[0].site)
-                Log.d("MoviesViewModel", _status.value.toString())
             } catch (e: Exception) {
-                Log.e("MoviesViewModel", e.toString())
+                //Log.e("MoviesViewModel", e.toString())
                 _status.value = MoviesApiStatus.ERROR
                 _movie.value = null
             }

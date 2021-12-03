@@ -13,10 +13,24 @@
             type="com.buildappswithalejing.condorlabs_skill_test.network.DataOneMovie" />
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/movie_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <ImageView
             android:id="@+id/icon_movie_overview"
@@ -33,15 +47,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_marginTop="10dp"
             android:text="@string/movie_overview"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintStart_toEndOf="@+id/icon_movie_overview"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_image" />
 
             <TextView
                 android:id="@+id/movie_overview_text"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="34dp"
                 android:layout_marginTop="10dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -62,7 +77,6 @@
             app:layout_constraintTop_toTopOf="@+id/movie_release"
             app:srcCompat="@drawable/ic_date" />
 
-
         <TextView
             android:id="@+id/movie_release"
             android:layout_width="wrap_content"
@@ -79,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@string/release_date_text"
+            tools:text="@string/release_date_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintBottom_toBottomOf="@+id/movie_release"
             app:layout_constraintStart_toEndOf="@+id/movie_release"
@@ -111,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@string/budget_text"
+            tools:text="@string/budget_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintBottom_toBottomOf="@+id/movie_budget"
             app:layout_constraintStart_toEndOf="@+id/movie_budget"
@@ -131,12 +145,12 @@
             android:id="@+id/movie_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Video"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintStart_toEndOf="@+id/icon_video"
-            app:layout_constraintTop_toBottomOf="@+id/movie_budget" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_budget"
+            android:text="Video" />
 
         <TextView
             android:id="@+id/movie_video_text"
@@ -162,7 +176,6 @@
             app:srcCompat="@drawable/ic_watch" />
 
 
-
         <ImageView
             android:id="@+id/status_image"
             android:layout_width="wrap_content"
@@ -174,6 +187,19 @@
             app:moviesApiStatus="@{viewModel.status}" />
 
 
+        <ImageView
+            android:id="@+id/icon_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/movie_overview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/movie_overview"
+            app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>
